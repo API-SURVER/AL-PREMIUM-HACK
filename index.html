@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AL COMMUNITY</title>
+    <style>
+        :root {
+            --neon: #00ffea;
+            --bg: rgba(10, 10, 10, 0.98);
+        }
+
+        /* ব্যাকগ্রাউন্ড ফিক্সড রাখার জন্য */
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; background: #000; font-family: 'Segoe UI', sans-serif;
+            position: fixed; /* স্ক্রল বন্ধ করার জন্য */
+        }
+
+        #game-bg { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            border: none; z-index: 1; 
+        }
+
+        /* ছোট মুভেবল প্যানেল */
+        .float-panel {
+            position: absolute; top: 150px; left: 20px;
+            width: 170px; z-index: 9999;
+            background: var(--bg);
+            border: 1.5px solid var(--neon);
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 255, 234, 0.4);
+            overflow: hidden;
+            touch-action: none; /* ব্রাউজার ডিফল্ট অ্যাকশন বন্ধ */
+            user-select: none;
+        }
+
+        /* ড্র্যাগ হ্যান্ডেল ডিজাইন */
+        .handle {
+            background: linear-gradient(90deg, #00d2ff, #00ffea);
+            color: #000;
+            padding: 6px;
+            cursor: move;
+            font-size: 10px;
+            font-weight: 900;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .content { padding: 12px; text-align: center; }
+        .hidden { display: none !important; }
+
+        /* ইনপুট ও বাটন ডিজাইন */
+        input {
+            width: 85%; padding: 8px; margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05); border: 1px solid #333;
+            border-radius: 6px; color: var(--neon); font-size: 13px;
+            text-align: center; outline: none;
+        }
+
+        .btn-connect {
+            width: 95%; padding: 8px; border: none; border-radius: 20px;
+            background: var(--neon); color: #000; font-weight: bold;
+            font-size: 11px; cursor: pointer; transition: 0.3s;
+        }
+
+        /* টেলিগ্রাম বাটন ডিজাইন */
+        .tg-link {
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 12px; padding: 6px;
+            background: #222; color: #fff;
+            font-size: 10px; text-decoration: none; 
+            border-radius: 6px; border: 1px solid #0088cc;
+            transition: 0.3s;
+        }
+        .tg-link:hover { background: #0088cc; }
+        .tg-link svg { width: 14px; height: 14px; margin-right: 5px; fill: #0088cc; }
+        .tg-link:hover svg { fill: #fff; }
+
+        /* প্রেডিকশন ডিজাইন */
+        .timer-box { font-size: 22px; color: #ffeb3b; font-weight: bold; margin: 4px 0; }
+        .result-box { 
+            font-size: 19px; font-weight: 900; margin: 8px 0; 
+            padding: 8px; border-radius: 8px; background: rgba(0, 255, 234, 0.05);
+            border: 1px dashed rgba(0, 255, 234, 0.3);
+        }
+
+        .live-dot {
+            width: 7px; height: 7px; background: #ff0000;
+            border-radius: 50%; display: inline-block;
+            margin-right: 5px; box-shadow: 0 0 5px red;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.2; } }
+    </style>
+
+</head>
+<body>
+
+    <iframe id="game-bg" src="https://bdwin24.bet/login"><"https://dkwin12.com/#/saasLottery/WinGo?gameCode=WinGo_30S&lottery=WinGo"></iframe>
+
+    <div id="main-panel" class="float-panel">
+        <div class="handle" id="drag-handle">AL COMMUNITY</div>
+        
+        <div class="content">
+            <div id="login-section">
+                <input type="password" id="pass-key" placeholder="ENTER ACCESS KEY">
+                <button class="btn-connect" onclick="checkKey()">CONNECT SERVER</button>
+            </div>
+
+            <div id="pred-section" class="hidden">
+                <div style="font-size: 9px; color: #aaa; letter-spacing: 1px;">
+                    <span class="live-dot"></span>LIVE ANALYSIS
+                </div>
+                <div id="timer-val" class="timer-box">00</div>
+                <div id="res-val" class="result-box" style="color: #fff;">...</div>
+            </div>
+
+            <a href="https://t.me/AL_TEAM_OFFICIAL_CHANNEL" target="_blank" class="tg-link">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                JOIN TELEGRAM
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const KEY = "alv3";
+        const panel = document.getElementById("main-panel");
+        const handle = document.getElementById("drag-handle");
+
+        // --- উন্নত ড্র্যাগিং লজিক (ব্যাকগ্রাউন্ড মুভমেন্ট ছাড়াই) ---
+        let posX = 0, posY = 0, mouseX = 0, mouseY = 0;
+
+        handle.addEventListener('mousedown', dragStart);
+        handle.addEventListener('touchstart', dragStart, { passive: false });
+
+        function dragStart(e) {
+            // ব্যাকগ্রাউন্ড স্ক্রলিং আটকানো
+            if (e.type === 'touchstart') {
+                mouseX = e.touches[0].clientX;
+                mouseY = e.touches[0].clientY;
+            } else {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            }
+            
+            document.addEventListener('mousemove', dragMove);
+            document.addEventListener('touchmove', dragMove, { passive: false });
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchend', dragEnd);
+        }
+
+        function dragMove(e) {
+            e.preventDefault(); // পিছনের ব্যাকগ্রাউন্ড নড়াচড়া বন্ধ করে
+            
+            let currentX, currentY;
+            if (e.type === 'touchmove') {
+                currentX = e.touches[0].clientX;
+                currentY = e.touches[0].clientY;
+            } else {
+                currentX = e.clientX;
+                currentY = e.clientY;
+            }
+
+            let diffX = mouseX - currentX;
+            let diffY = mouseY - currentY;
+
+            panel.style.top = (panel.offsetTop - diffY) + "px";
+            panel.style.left = (panel.offsetLeft - diffX) + "px";
+
+            mouseX = currentX;
+            mouseY = currentY;
+        }
+
+        function dragEnd() {
+            document.removeEventListener('mousemove', dragMove);
+            document.removeEventListener('touchmove', dragMove);
+        }
+
+        // --- লগইন ও প্রেডিকশন এনালাইসিস ---
+        function checkKey() {
+            const val = document.getElementById("pass-key").value;
+            if(val === KEY) {
+                document.getElementById("login-section").classList.add("hidden");
+                document.getElementById("pred-section").classList.remove("hidden");
+                startWork();
+            } else {
+                alert("ACCESS DENIED!");
+            }
+        }
+
+        function startWork() {
+            setInterval(() => {
+                const now = new Date();
+                const bst = new Date(now.getTime() + (now.getTimezoneOffset() * 60000) + (3600000 * 6));
+                const sec = bst.getSeconds();
+                let rem = (sec < 30) ? (30 - sec) : (60 - sec);
+                
+                document.getElementById("timer-val").innerText = rem < 10 ? "0" + rem : rem;
+
+                if(rem === 30 || rem === 59 || document.getElementById("res-val").innerText === "...") {
+                    updatePrediction();
+                }
+            }, 1000);
+        }
+
+        function updatePrediction() {
+            const res = document.getElementById("res-val");
+            res.innerText = "ANALYZING...";
+            res.style.color = "#888";
+
+            setTimeout(() => {
+                const results = ["BIG", "SMALL", "BIG", "BIG", "SMALL", "SMALL"];
+                const pick = results[Math.floor(Math.random() * results.length)];
+                res.innerText = pick;
+                res.style.color = (pick === "BIG") ? "#00ff88" : "#ff0055";
+                res.style.textShadow = `0 0 10px ${(pick === "BIG") ? "rgba(0,255,136,0.5)" : "rgba(255,0,85,0.5)"}`;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
